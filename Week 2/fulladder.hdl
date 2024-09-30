@@ -1,0 +1,12 @@
+CHIP FullAdder {
+    IN a, b, c;  // 1-bit inputs
+    OUT sum,     // Right bit of a + b + c
+        carry;   // Left bit of a + b + c
+
+    PARTS:
+    Xor(a = a, b = b, out=tempSum);
+    Xor(a = tempSum, b = c, out=sum);
+    And(a = a, b = b, out=aAndb);
+    And(a = tempSum, b = c, out=cIn);
+    Or(a=aAndb, b = cIn, out=carry);
+}
