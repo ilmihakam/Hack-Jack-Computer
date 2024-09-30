@@ -1,0 +1,22 @@
+/**
+ * Memory of 16K 16-bit registers.
+ * If load is asserted, the value of the register selected by
+ * address is set to in; Otherwise, the value does not change.
+ * The value of the selected register is emitted by out.
+ */
+CHIP RAM16K {
+    IN in[16], load, address[15];
+    OUT out[16];
+
+    PARTS:
+    DMux8Way(in=load, sel=address[0..2], a=ramA, b=ramB, c=ramC, d=ramD, e=ramE, f=ramF, g=ramG, h=ramH);
+    RAM4K(in=in, load=ramA, address=address[3..14], out=outA);
+    RAM4K(in=in, load=ramB, address=address[3..14], out=outB);
+    RAM4K(in=in, load=ramC, address=address[3..14], out=outC);
+    RAM4K(in=in, load=ramD, address=address[3..14], out=outD);
+    RAM4K(in=in, load=ramE, address=address[3..14], out=outE);
+    RAM4K(in=in, load=ramF, address=address[3..14], out=outF);
+    RAM4K(in=in, load=ramG, address=address[3..14], out=outG);
+    RAM4K(in=in, load=ramH, address=address[3..14], out=outH);
+    Mux8Way16(a=outA, b=outB, c=outC, d=outD, e=outE, f=outF, g=outG, h=outH, sel=address[0..2], out=out);
+}
